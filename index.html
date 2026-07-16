@@ -1,0 +1,3120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeyBitz - Premium Digital Music Ecosystem Proposal</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons & Animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* CORE STYLING VARIABLES */
+        :root {
+            --bg-base: #06080c;
+            --bg-surface: rgba(13, 17, 24, 0.7);
+            --bg-surface-hover: rgba(20, 26, 38, 0.85);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.16);
+            --color-primary: #00f2fe;
+            --color-secondary: #4facfe;
+            --color-accent: #8a2be2;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-text-main: #f3f4f6;
+            --color-text-muted: #9ca3af;
+            --font-display: 'Outfit', sans-serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+            --gradient-accent: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #8a2be2 100%);
+            --shadow-premium: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background-color: var(--bg-base);
+            color: var(--color-text-main);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+        }
+
+        body {
+            min-height: 100vh;
+            line-height: 1.6;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(138, 43, 226, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 242, 254, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(79, 172, 254, 0.05) 0%, transparent 60%);
+            background-attachment: fixed;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+        }
+
+        p {
+            font-size: 1rem;
+            color: var(--color-text-muted);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #ffffff 30%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .primary-glow-text {
+            background: linear-gradient(135deg, #00f2fe, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 242, 254, 0.3);
+        }
+
+        .glass-panel {
+            background: var(--bg-surface);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            box-shadow: var(--shadow-premium);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-panel:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+        }
+
+        /* STICKY GLASSMORPHIC HEADER */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(6, 8, 12, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 800;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--color-primary);
+            animation: pulse-glow 2s infinite;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: var(--color-text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--color-text-main);
+        }
+
+        .scope-filter-container {
+            display: flex;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 4px;
+            border-radius: 30px;
+            margin-left: 1rem;
+        }
+
+        .scope-btn {
+            background: transparent;
+            border: none;
+            color: var(--color-text-muted);
+            padding: 6px 14px;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .scope-btn.active {
+            background: var(--gradient-accent);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 2rem 0;
+            margin-bottom: 6rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 80%;
+            background: url('./assets/seybitz_hero_backdrop.png') no-repeat center center;
+            background-size: contain;
+            opacity: 0.3;
+            z-index: -1;
+            filter: blur(2px) mask-image(radial-gradient(ellipse at center, black 40%, transparent 80%));
+            -webkit-mask-image: radial-gradient(circle, black 30%, transparent 75%);
+        }
+
+        .hero-badge {
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid rgba(0, 242, 254, 0.25);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.05);
+        }
+
+        .hero h1 {
+            font-size: 4.8rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            max-width: 1000px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 750px;
+            margin-bottom: 3.5rem;
+            color: var(--color-text-muted);
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: var(--gradient-accent);
+            color: #ffffff;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 14px 28px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(79, 172, 254, 0.35);
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 30px rgba(79, 172, 254, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--color-text-main);
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 14px 28px;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--border-hover);
+        }
+
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;
+            height: 100%;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+            background-size: 80px 80px;
+            background-position: center;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* SECTION HEADERS */
+        .section-header {
+            margin-bottom: 5rem;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-size: 3.2rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .section-header p {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.15rem;
+        }
+
+        section {
+            padding: 7rem 0;
+            position: relative;
+        }
+
+        /* SPOTLIGHT FEATURE HIGHLIGHTS */
+        .spotlight-container {
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+        }
+
+        .spotlight-card {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 4rem;
+            align-items: center;
+            padding: 4rem;
+            border-radius: 24px;
+        }
+
+        @media(max-width: 1024px) {
+            .spotlight-card {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+                padding: 2.5rem;
+            }
+        }
+
+        .spotlight-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            min-height: 320px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .spotlight-card:nth-child(even) .spotlight-visual {
+            order: 2;
+        }
+
+        .spotlight-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .spotlight-card:hover .spotlight-img {
+            transform: scale(1.04);
+        }
+
+        .tag-premium {
+            background: linear-gradient(135deg, #00f2fe 0%, #8a2be2 100%);
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 5px 12px;
+            border-radius: 30px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+        }
+
+        .spotlight-card h3 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .spotlight-card p.description {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media(max-width: 640px) {
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .detail-block {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        .detail-block h5 {
+            font-size: 0.85rem;
+            color: var(--color-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .detail-block p {
+            font-size: 0.85rem;
+        }
+
+        .user-journey-block {
+            grid-column: span 2;
+            background: rgba(138, 43, 226, 0.03);
+            border: 1px solid rgba(138, 43, 226, 0.15);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        @media(max-width: 640px) {
+            .user-journey-block {
+                grid-column: span 1;
+            }
+        }
+
+        .user-journey-block h5 {
+            font-size: 0.85rem;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .journey-steps {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .journey-step {
+            flex: 1;
+            min-width: 100px;
+            position: relative;
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            text-align: center;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* ALL FEATURES GRID */
+        .features-filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .feature-cat-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            color: var(--color-text-muted);
+            padding: 10px 22px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .feature-cat-btn.active,
+        .feature-cat-btn:hover {
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--color-primary);
+            border-color: rgba(0, 242, 254, 0.3);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .badge-new {
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid rgba(0, 242, 254, 0.25);
+            color: var(--color-primary);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: inline-block;
+            margin-bottom: 1rem;
+            align-self: flex-start;
+        }
+
+        .badge-old {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--color-text-muted);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: inline-block;
+            margin-bottom: 1rem;
+            align-self: flex-start;
+        }
+
+        .feature-icon-container {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            background: rgba(0, 242, 254, 0.05);
+            border: 1px solid rgba(0, 242, 254, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: var(--color-primary);
+            margin-bottom: 1.75rem;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover .feature-icon-container {
+            background: var(--gradient-accent);
+            color: #ffffff;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+        }
+
+        .feature-card h3 {
+            font-size: 1.45rem;
+            margin-bottom: 1rem;
+            color: var(--color-text-main);
+        }
+
+        .feature-card p {
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .feature-detail-btn {
+            background: transparent;
+            border: none;
+            color: var(--color-primary);
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.2s;
+        }
+
+        .feature-detail-btn:hover {
+            gap: 0.8rem;
+        }
+
+        /* DETAILED POPUP SPEC MODAL */
+        .feature-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(6, 8, 12, 0.85);
+            backdrop-filter: blur(25px);
+            z-index: 1100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 2rem;
+        }
+
+        .feature-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .overlay-content {
+            width: 100%;
+            max-width: 800px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 3.5rem;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .feature-overlay.active .overlay-content {
+            transform: scale(1);
+        }
+
+        .close-overlay-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: #ffffff;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .close-overlay-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .overlay-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .overlay-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .overlay-item h4 {
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* MOBILE APPLICATION SHOWCASE (Phone Simulator) */
+        .mobile-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        @media(max-width: 1024px) {
+            .mobile-showcase {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+        }
+
+        .phone-mockup-wrapper {
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .phone-mockup {
+            width: 320px;
+            height: 640px;
+            background: #000000;
+            border-radius: 40px;
+            border: 12px solid #1a1e26;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 2px rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 20px;
+            background: #1a1e26;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            z-index: 10;
+        }
+
+        .phone-screen {
+            flex-grow: 1;
+            background: #0a0d14;
+            padding: 24px 16px 16px;
+            display: none;
+            flex-direction: column;
+            position: relative;
+            height: 100%;
+        }
+
+        .phone-screen.active {
+            display: flex;
+            animation: fadeIn 0.4s;
+        }
+
+        .phone-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-family: var(--font-display);
+        }
+
+        .listener-home-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow-y: auto;
+            max-height: 480px;
+        }
+
+        .listener-home-list::-webkit-scrollbar {
+            display: none;
+        }
+
+        .album-card-sm {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .album-card-sm:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .album-art-sm {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            background: var(--gradient-accent);
+        }
+
+        .player-disc-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1rem;
+            gap: 1.5rem;
+        }
+
+        .player-disc {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #252830 20%, #0c0f16 100%);
+            border: 4px solid var(--border-color);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            animation: rotateDisk 12s linear infinite;
+            animation-play-state: paused;
+        }
+
+        .player-disc.playing {
+            animation-play-state: running;
+        }
+
+        .player-disc-inner {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-accent);
+            border: 2px solid #000;
+        }
+
+        .track-info {
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .lyrics-line {
+            font-size: 0.8rem;
+            color: var(--color-primary);
+            text-align: center;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .player-controls {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+
+        .control-btn {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .control-btn.play-toggle {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            color: #06080c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            box-shadow: 0 0 15px var(--color-primary);
+        }
+
+        .audio-wave {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 3px;
+            height: 24px;
+            margin-top: 10px;
+        }
+
+        .wave-bar {
+            width: 3px;
+            height: 4px;
+            background: var(--color-primary);
+            border-radius: 3px;
+            transition: height 0.1s;
+        }
+
+        .tiktok-feed {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            position: relative;
+            padding-bottom: 2rem;
+        }
+
+        .tiktok-overlay-info {
+            position: absolute;
+            bottom: 40px;
+            left: 10px;
+            right: 50px;
+            z-index: 5;
+        }
+
+        .tiktok-sidebar {
+            position: absolute;
+            bottom: 40px;
+            right: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            align-items: center;
+            z-index: 5;
+        }
+
+        .sidebar-icon {
+            font-size: 1.25rem;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            cursor: pointer;
+        }
+
+        .sidebar-icon span {
+            font-size: 0.65rem;
+            color: var(--color-text-muted);
+        }
+
+        .mockup-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .mockup-selector-btn {
+            padding: 1.25rem;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-surface);
+            color: var(--color-text-muted);
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mockup-selector-btn:hover,
+        .mockup-selector-btn.active {
+            background: var(--bg-surface-hover);
+            border-color: var(--color-primary);
+            color: #ffffff;
+        }
+
+        .mockup-selector-btn.active .btn-indicator {
+            width: 8px;
+            height: 8px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--color-primary);
+        }
+
+        /* ARTIST MODE STYLING IN MOBILE */
+        .creator-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .creator-form-group label {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+        }
+
+        .creator-form-group input,
+        .creator-form-group select {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            color: #fff;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            outline: none;
+        }
+
+        /* ADMIN PANEL DASHBOARD SHOWCASE */
+        .admin-showcase-container {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        @media(max-width: 900px) {
+            .admin-showcase-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .admin-sidebar {
+            background: rgba(255, 255, 255, 0.01);
+            border-right: 1px solid var(--border-color);
+            padding-right: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .admin-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            color: var(--color-text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .admin-nav-item:hover,
+        .admin-nav-item.active {
+            background: rgba(255, 255, 255, 0.04);
+            color: #ffffff;
+        }
+
+        .admin-main-panel {
+            min-height: 400px;
+        }
+
+        .admin-tab-content {
+            display: none;
+        }
+
+        .admin-tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        .admin-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .admin-stat-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: left;
+        }
+
+        .admin-stat-card .val {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 5px 0;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .admin-table th,
+        .admin-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.85rem;
+        }
+
+        .admin-table th {
+            text-align: left;
+            color: var(--color-text-muted);
+        }
+
+        /* INTERACTIVE ARCHITECTURE DIAGRAM */
+        .arch-diagram-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: auto;
+            padding: 2rem 0;
+        }
+
+        .arch-node {
+            cursor: pointer;
+            transition: filter 0.3s;
+        }
+
+        .arch-node:hover {
+            filter: drop-shadow(0 0 10px var(--color-primary));
+        }
+
+        .arch-pipe {
+            stroke-dasharray: 8;
+            animation: dash 15s linear infinite;
+        }
+
+        /* REVENUE FLOW GRAPHIC */
+        .revenue-canvas {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            padding: 3rem 2rem;
+        }
+
+        .revenue-flow-svg-wrapper {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            overflow-x: auto;
+        }
+
+        .revenue-particle {
+            fill: #00f2fe;
+            filter: drop-shadow(0 0 4px #00f2fe);
+        }
+
+        /* FEATURE COMPARISON TABLE */
+        .comparison-table-wrapper {
+            margin-top: 2rem;
+            overflow-x: auto;
+        }
+
+        table.comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        table.comparison-table th {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        table.comparison-table td {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95rem;
+            color: var(--color-text-muted);
+        }
+
+        table.comparison-table tr:hover td {
+            background: rgba(255, 255, 255, 0.01);
+            color: var(--color-text-main);
+        }
+
+        .scope-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .scope-badge.included {
+            background: rgba(79, 172, 254, 0.1);
+            color: #4facfe;
+            border: 1px solid rgba(79, 172, 254, 0.2);
+        }
+
+        .scope-badge.new {
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--color-primary);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+        }
+
+        .scope-badge.future {
+            background: rgba(138, 43, 226, 0.1);
+            color: var(--color-accent);
+            border: 1px solid rgba(138, 43, 226, 0.2);
+        }
+
+        /* TIMELINE GRAPHIC */
+        .timeline-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-accent) 100%);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            width: 50%;
+            position: relative;
+            padding: 2rem;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            text-align: left;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            border: 4px solid var(--bg-base);
+            position: absolute;
+            top: 2.5rem;
+            z-index: 3;
+            box-shadow: 0 0 10px var(--color-primary);
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -8px;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -8px;
+        }
+
+        .timeline-phase {
+            font-size: 0.85rem;
+            color: var(--color-primary);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        /* TECH GRID CARDS */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tech-card {
+            padding: 2rem 1.5rem;
+            text-align: center;
+            border-radius: 16px;
+        }
+
+        .tech-card i {
+            font-size: 2.8rem;
+            margin-bottom: 1.25rem;
+        }
+
+        /* ANIMATION TRIGGERS */
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 12px var(--color-primary);
+            }
+
+            50% {
+                box-shadow: 0 0 24px rgba(0, 242, 254, 0.6);
+            }
+
+            100% {
+                box-shadow: 0 0 12px var(--color-primary);
+            }
+        }
+
+        @keyframes rotateDisk {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes dash {
+            to {
+                stroke-dashoffset: -100;
+            }
+        }
+
+        /* PRINT VIEWER OVERRIDES */
+        @media print {
+            body {
+                background: #ffffff;
+                color: #000000;
+            }
+
+            header,
+            .features-filter-bar,
+            .mockup-controls,
+            .admin-sidebar {
+                display: none !important;
+            }
+
+            .glass-panel {
+                border: 1px solid #ccc;
+                box-shadow: none;
+                background: transparent;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- STICKY HEADER -->
+    <header class="glass-panel">
+        <div class="header-container">
+            <a href="#" class="logo">
+                <span class="logo-dot"></span>
+                <span
+                    style="background: linear-gradient(135deg, #ffffff, #00f2fe); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">SeyBitz</span>
+            </a>
+            <nav>
+                <a href="#vision">Vision</a>
+                <a href="#spotlight">✨ Highlights</a>
+                <a href="#features">All Features</a>
+                <a href="#mockups">Mobile App</a>
+                <a href="#admin">Admin Portal</a>
+                <a href="#architecture">Architecture</a>
+                <a href="#timeline">Timeline</a>
+                <div class="scope-filter-container">
+                    <button class="scope-btn active" onclick="setGlobalScopeFilter('all', this)">All Scope</button>
+                    <button class="scope-btn" onclick="setGlobalScopeFilter('existing', this)">Existing</button>
+                    <button class="scope-btn" onclick="setGlobalScopeFilter('newly-added', this)">✨ Newly Added</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="grid-overlay"></div>
+
+    <main>
+
+        <!-- HERO SECTION -->
+        <section id="hero" class="hero">
+            <div class="hero-badge">
+                <i class="fa-solid fa-sparkles"></i> SeyBitz Platform Proposal v2.0
+            </div>
+            <h1>
+                The Digital Home of<br>
+                <span class="primary-glow-text">Seychellois Music Culture</span>
+            </h1>
+            <p>
+                SeyBitz transforms from a standard music streaming application into a complete music ecosystem. Connect
+                music lovers, empower local artists to monetize content directly, and scale Seychelles music culture
+                globally.
+            </p>
+            <div class="hero-btns">
+                <a href="#spotlight" class="btn-primary">Explore New Features <i class="fa-solid fa-arrow-down"></i></a>
+                <a href="#mockups" class="btn-secondary">View Mobile App</a>
+            </div>
+        </section>
+
+        <!-- VISION SECTION -->
+        <section id="vision">
+            <div class="section-header">
+                <h2>The Vision 2.0 Ecosystem</h2>
+                <p>An all-in-one music hub built to maximize artist revenue, boost user engagement, and enable seamless
+                    administration.</p>
+            </div>
+
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                <div class="glass-panel" style="padding: 2.5rem;">
+                    <i class="fa-solid fa-users"
+                        style="font-size: 2.5rem; color: var(--color-primary); margin-bottom: 1.5rem;"></i>
+                    <h3 style="margin-bottom: 1rem;">For Listeners</h3>
+                    <p>Highly personalized home feeds, mood playlists, offline sync, community spaces, and interactive
+                        lyric sessions that build deeper fan connections.</p>
+                </div>
+                <div class="glass-panel" style="padding: 2.5rem;">
+                    <i class="fa-solid fa-guitar"
+                        style="font-size: 2.5rem; color: var(--color-accent); margin-bottom: 1.5rem;"></i>
+                    <h3 style="margin-bottom: 1rem;">For Artists</h3>
+                    <p>Direct monetization pathways through VIP Clubs, custom merchandise sales, direct fan donations,
+                        live concert streaming passes, and deep analytics.</p>
+                </div>
+                <div class="glass-panel" style="padding: 2.5rem;">
+                    <i class="fa-solid fa-gears" style="font-size: 2.5rem; color: #4facfe; margin-bottom: 1.5rem;"></i>
+                    <h3 style="margin-bottom: 1rem;">For Administrators</h3>
+                    <p>Fingerprint-based copyright filters, tiered artist verification workflows, dynamic role
+                        allocation, CMS interfaces, and detailed payout logs.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ✨ NEWLY ADDED FEATURES HIGHLIGHT -->
+        <section id="spotlight">
+            <div class="section-header">
+                <h2>✨ Newly Added Features Highlight</h2>
+                <p>These flagship additions transform SeyBitz into a premium, community-driven, highly monetizable
+                    platform. Click 'Detailed Specs' on any feature card below to see technical designs.</p>
+            </div>
+
+            <div class="spotlight-container" id="spotlightContainer">
+                <!-- Top 15 flagship new features loaded dynamically with Big Card Layout -->
+            </div>
+        </section>
+
+        <!-- ALL FEATURES CATALOGUE -->
+        <section id="features">
+            <div class="section-header">
+                <h2>Full Platform Features Directory</h2>
+                <p>Filter or search to explore both the original base components and the new features proposed for the
+                    next launch phase.</p>
+            </div>
+
+            <div class="features-filter-bar">
+                <button class="feature-cat-btn active" onclick="filterCategory('all', this)">All Categories</button>
+                <button class="feature-cat-btn" onclick="filterCategory('engagement', this)">User Engagement</button>
+                <button class="feature-cat-btn" onclick="filterCategory('monetization', this)">Monetization &
+                    Sales</button>
+                <button class="feature-cat-btn" onclick="filterCategory('ai-smart', this)">AI & Search
+                    Integration</button>
+                <button class="feature-cat-btn" onclick="filterCategory('artist-tools', this)">Artist Suite</button>
+                <button class="feature-cat-btn" onclick="filterCategory('admin-core', this)">Admin & Security</button>
+            </div>
+
+            <div class="features-grid" id="featuresGrid">
+                <!-- Dynamic load of 40 features + base features -->
+            </div>
+        </section>
+
+        <!-- INTERACTIVE MOBILE APP SHOWCASE -->
+        <section id="mockups">
+            <div class="section-header">
+                <h2>Mobile Application Suite</h2>
+                <p>Interactive look inside the listener and artist mobile apps designed to power SeyBitz.</p>
+            </div>
+
+            <!-- Toggle for Listener vs Artist App Modes -->
+            <div style="display:flex; justify-content:center; margin-bottom: 2rem;">
+                <div
+                    style="background:rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 4px; border-radius: 30px; display:flex;">
+                    <button id="listenerModeToggleBtn" class="scope-btn active"
+                        onclick="toggleMobileAppMode('listener')">Listener Application</button>
+                    <button id="artistModeToggleBtn" class="scope-btn" onclick="toggleMobileAppMode('artist')">Artist
+                        Application Suite</button>
+                </div>
+            </div>
+
+            <div class="mobile-showcase">
+                <!-- Selector tabs for Listener Mode -->
+                <div class="mockup-controls" id="listenerMockupControls">
+                    <button class="mockup-selector-btn active" onclick="selectMobileScreen('home', this)">
+                        <div>
+                            <h4 style="color: #fff; margin-bottom: 4px;"><i class="fa-solid fa-house"></i> Listener Home
+                                Feed</h4>
+                            <p style="font-size: 0.8rem;">Dynamic recommendations and personalized lists</p>
+                        </div>
+                        <span class="btn-indicator"></span>
+                    </button>
+                    <button class="mockup-selector-btn" onclick="selectMobileScreen('player', this)">
+                        <div>
+                            <h4 style="color: #fff; margin-bottom: 4px;"><i class="fa-solid fa-music"></i> Premium Audio
+                                Player</h4>
+                            <p style="font-size: 0.8rem;">Glassmorphism layout with sync lyrics</p>
+                        </div>
+                        <span class="btn-indicator"></span>
+                    </button>
+                    <button class="mockup-selector-btn" onclick="selectMobileScreen('tiktok', this)">
+                        <div>
+                            <h4 style="color: #fff; margin-bottom: 4px;"><i class="fa-solid fa-play"></i> Vertical
+                                Discovery Clips</h4>
+                            <p style="font-size: 0.8rem;">Swipe-based short-form audio clips feed</p>
+                        </div>
+                        <span class="btn-indicator"></span>
+                    </button>
+                    <button class="mockup-selector-btn" onclick="selectMobileScreen('wallet', this)">
+                        <div>
+                            <h4 style="color: #fff; margin-bottom: 4px;"><i class="fa-solid fa-wallet"></i> VIP Wallet &
+                                Membership</h4>
+                            <p style="font-size: 0.8rem;">Concert tickets, VIP passes, and loyalty points</p>
+                        </div>
+                        <span class="btn-indicator"></span>
+                    </button>
+                </div>
+
+                <!-- Selector tabs for Artist Mode -->
+                <div class="mockup-controls" id="artistMockupControls" style="display:none;">
+                    <button class="mockup-selector-btn active" onclick="selectMobileScreen('artist-dashboard', this)">
+                        <div>
+                            <h4 style="color: #fff; margin-bottom: 4px;"><i class="fa-solid fa-chart-pie"></i> Creator
+                                Dashboard</h4>
+                            <p style="font-size: 0.8rem;">Review real-time streams, followers, and earnings</p>
+                        </div>
+                        <span class="btn-indicator"></span>
+                    </button>
+                    <button class="mockup-selector-btn" onclick="selectMobileScreen('artist-upload', this)">
+                        <div>
+                            <h4 style="color: #fff; margin-bottom: 4px;"><i class="fa-solid fa-cloud-arrow-up"></i>
+                                Upload & Monetize</h4>
+                            <p style="font-size: 0.8rem;">Publish albums, set singles price & release dates</p>
+                        </div>
+                        <span class="btn-indicator"></span>
+                    </button>
+                    <button class="mockup-selector-btn" onclick="selectMobileScreen('artist-events', this)">
+                        <div>
+                            <h4 style="color: #fff; margin-bottom: 4px;"><i class="fa-solid fa-ticket"></i> Live Events
+                                Center</h4>
+                            <p style="font-size: 0.8rem;">Manage tour venues, dates, and ticket prices</p>
+                        </div>
+                        <span class="btn-indicator"></span>
+                    </button>
+                </div>
+
+                <div class="phone-mockup-wrapper"
+                    style="flex:1; display:flex; align-items:center; justify-content:center;">
+                    <div
+                        style="position:relative; width:100%; max-width:550px; aspect-ratio:1/1; border-radius:20px; overflow:hidden;">
+
+                        <!-- SCREEN 1: Listener Home -->
+                        <div class="phone-screen active" id="phone-screen-home"
+                            style="position:absolute; inset:0; padding:0; overflow:hidden; transition: opacity 0.4s ease;">
+                            <img src="./assets/listener_home_list.png" alt="Listener Home Feed"
+                                style="width:100%; height:100%; object-fit:cover; display:block;" />
+                        </div>
+
+                        <!-- SCREEN 2: Premium Player -->
+                        <div class="phone-screen" id="phone-screen-player"
+                            style="position:absolute; inset:0; padding:0; overflow:hidden; transition: opacity 0.4s ease;">
+                            <img src="./assets/premium_player.png" alt="Premium Audio Player"
+                                style="width:100%; height:100%; object-fit:cover; display:block;" />
+                        </div>
+
+                        <!-- SCREEN 3: TikTok Clips -->
+                        <div class="phone-screen" id="phone-screen-tiktok"
+                            style="position:absolute; inset:0; padding:0; overflow:hidden; transition: opacity 0.4s ease;">
+                            <img src="./assets/tiktok_clips.png" alt="Vertical Discovery Clips"
+                                style="width:100%; height:100%; object-fit:cover; display:block;" />
+                        </div>
+
+                        <!-- SCREEN 4: Wallet -->
+                        <div class="phone-screen" id="phone-screen-wallet"
+                            style="position:absolute; inset:0; padding:0; overflow:hidden; transition: opacity 0.4s ease;">
+                            <img src="./assets/wallet.png" alt="VIP Wallet & Membership"
+                                style="width:100%; height:100%; object-fit:cover; display:block;" />
+                        </div>
+
+                        <!-- SCREEN 5: Creator Dashboard (Artist App) -->
+                        <div class="phone-screen" id="phone-screen-artist-dashboard"
+                            style="position:absolute; inset:0; padding:0; overflow:hidden; transition: opacity 0.4s ease;">
+                            <img src="./assets/creator_dashboard.png" alt="Creator Dashboard"
+                                style="width:100%; height:100%; object-fit:contain; display:block;" />
+                        </div>
+
+                        <!-- SCREEN 6: Creator Upload (Artist App) -->
+                        <div class="phone-screen" id="phone-screen-artist-upload"
+                            style="position:absolute; inset:0; padding:0; overflow:hidden; transition: opacity 0.4s ease;">
+                            <img src="./assets/creator_upload_artist_app.png" alt="Upload & Monetize"
+                                style="width:100%; height:100%; object-fit:contain; display:block;" />
+                        </div>
+
+                        <!-- SCREEN 7: Creator Events (Artist App) -->
+                        <div class="phone-screen" id="phone-screen-artist-events"
+                            style="position:absolute; inset:0; padding:0; overflow:hidden; transition: opacity 0.4s ease;">
+                            <img src="./assets/tour_manager.png" alt="Tour Manager"
+                                style="width:100%; height:100%; object-fit: cover ; display:block;" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ADMIN DASHBOARD SHOWCASE -->
+        <section id="admin">
+            <div class="section-header">
+                <h2>Administrative Control Portal</h2>
+                <p>Complete control interface designed for administrators to manage users, verified tiers, and copyright
+                    fingerprinters.</p>
+            </div>
+
+            <div class="glass-panel admin-showcase-container">
+                <div class="admin-sidebar">
+                    <div class="admin-nav-item active" onclick="selectAdminTab('admin-analytics', this)"><i
+                            class="fa-solid fa-chart-line"></i> Analytics Overview</div>
+                    <div class="admin-nav-item" onclick="selectAdminTab('admin-verification', this)"><i
+                            class="fa-solid fa-shield-halved"></i> Artist Verification</div>
+                    <div class="admin-nav-item" onclick="selectAdminTab('admin-copyright', this)"><i
+                            class="fa-solid fa-copyright"></i> Copyright Shield</div>
+                    <div class="admin-nav-item" onclick="selectAdminTab('admin-cms', this)"><i
+                            class="fa-solid fa-folder-open"></i> CMS Content Management</div>
+                </div>
+                <div class="admin-main-panel">
+
+                    <!-- TAB 1: Analytics -->
+                    <div class="admin-tab-content active" id="admin-analytics">
+                        <div class="admin-stats-grid">
+                            <div class="admin-stat-card">
+                                <p style="font-size: 0.8rem;">Active Streamers</p>
+                                <div class="val">12,450</div>
+                                <span style="font-size: 0.7rem; color: #10b981;"><i class="fa-solid fa-arrow-up"></i>
+                                    +12% this week</span>
+                            </div>
+                            <div class="admin-stat-card">
+                                <p style="font-size: 0.8rem;">Artist Accounts</p>
+                                <div class="val">380</div>
+                                <span style="font-size: 0.7rem; color: #10b981;"><i class="fa-solid fa-arrow-up"></i> +4
+                                    new submissions</span>
+                            </div>
+                            <div class="admin-stat-card">
+                                <p style="font-size: 0.8rem;">Platform Commission</p>
+                                <div class="val">$8,450</div>
+                                <span style="font-size: 0.7rem; color: #10b981;"><i class="fa-solid fa-arrow-up"></i>
+                                    +8% this month</span>
+                            </div>
+                        </div>
+                        <div style="height: 250px; width: 100%;">
+                            <canvas id="adminRevenueChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: Verification Queue -->
+                    <div class="admin-tab-content" id="admin-verification">
+                        <h4 style="margin-bottom: 1rem; color: #fff;">Pending Artist Verifications</h4>
+                        <p style="font-size: 0.85rem; margin-bottom: 1rem;">Perform due diligence checks before
+                            assigning verification badges.</p>
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Artist</th>
+                                    <th>Region</th>
+                                    <th>Followers</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Jean Marc</td>
+                                    <td>Mahe</td>
+                                    <td>12,400</td>
+                                    <td><span style="color: #f59e0b;">Pending Review</span></td>
+                                    <td>
+                                        <button class="btn-primary"
+                                            style="padding: 4px 8px; font-size: 0.75rem; border-radius: 4px;">Verify</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Sega Masters</td>
+                                    <td>Praslin</td>
+                                    <td>45,000</td>
+                                    <td><span style="color: #f59e0b;">Pending Review</span></td>
+                                    <td>
+                                        <button class="btn-primary"
+                                            style="padding: 4px 8px; font-size: 0.75rem; border-radius: 4px;">Verify</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- TAB 3: Copyright -->
+                    <div class="admin-tab-content" id="admin-copyright">
+                        <h4 style="margin-bottom: 1rem; color: #fff;">Audio Fingerprinting & DMCA Panel</h4>
+                        <p style="font-size: 0.85rem; margin-bottom: 1.5rem;">SeyBitz uses automatic fingerprinting to
+                            flag matching content uploaded unlawfully.</p>
+                        <div class="admin-stat-card"
+                            style="margin-bottom: 1rem; background: rgba(239, 68, 68, 0.05); border-color: rgba(239,68,68,0.25);">
+                            <h5 style="color: #ef4444; margin-bottom: 5px;"><i
+                                    class="fa-solid fa-triangle-exclamation"></i> 3 Potential Violations Detected</h5>
+                            <p style="font-size: 0.8rem;">Automatic matching threshold met (above 92% audio similarity).
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- TAB 4: CMS Content Management -->
+                    <div class="admin-tab-content" id="admin-cms">
+                        <h4 style="margin-bottom: 1rem; color: #fff;">Editorial Picks & Playlists Placements</h4>
+                        <p style="font-size: 0.85rem; margin-bottom: 1.5rem;">Schedule promoted collections and
+                            editorial picks directly on the user's home screen.</p>
+                        <div style="display:flex; flex-direction:column; gap:12px;">
+                            <div
+                                style="background:rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius:8px; padding:12px; display:flex; justify-content:space-between; align-items:center;">
+                                <div>
+                                    <h5 style="color:#fff;">Seychelles Independence Day Mix</h5>
+                                    <p style="font-size:0.75rem;">Status: Scheduled for July 29</p>
+                                </div>
+                                <button class="btn-secondary" style="padding: 6px 12px; font-size:0.75rem;">Edit
+                                    Campaign</button>
+                            </div>
+                            <div
+                                style="background:rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius:8px; padding:12px; display:flex; justify-content:space-between; align-items:center;">
+                                <div>
+                                    <h5 style="color:#fff;">Weekly Hidden Gems Curation</h5>
+                                    <p style="font-size:0.75rem;">Status: Live (July 15 - July 22)</p>
+                                </div>
+                                <button class="btn-secondary" style="padding: 6px 12px; font-size:0.75rem;">Edit
+                                    Campaign</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SYSTEM ARCHITECTURE DIAGRAM -->
+        <section id="architecture">
+            <div class="section-header">
+                <h2>Architecture Blueprint</h2>
+                <p>Scalable feature structure designed for performance, live streaming availability, and microservice
+                    support. Click any node to inspect.</p>
+            </div>
+
+            <div class="glass-panel arch-diagram-wrapper">
+                <svg width="800" height="500" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Client Tier -->
+                    <g class="arch-node" onclick="showArchInfo('client')">
+                        <rect x="50" y="200" width="160" height="100" rx="12" fill="var(--bg-surface)"
+                            stroke="var(--color-primary)" stroke-width="2" />
+                        <text x="130" y="245" fill="#fff" font-family="var(--font-display)" font-size="14"
+                            font-weight="bold" text-anchor="middle">Client Apps</text>
+                        <text x="130" y="265" fill="var(--color-text-muted)" font-family="var(--font-body)"
+                            font-size="11" text-anchor="middle">Flutter iOS/Android</text>
+                        <text x="130" y="280" fill="var(--color-text-muted)" font-family="var(--font-body)"
+                            font-size="11" text-anchor="middle">React Admin Portal</text>
+                    </g>
+                    <!-- Gateway / Backend Services Tier -->
+                    <g class="arch-node" onclick="showArchInfo('gateway')">
+                        <rect x="290" y="200" width="160" height="100" rx="12" fill="var(--bg-surface)" stroke="#4facfe"
+                            stroke-width="2" />
+                        <text x="370" y="245" fill="#fff" font-family="var(--font-display)" font-size="14"
+                            font-weight="bold" text-anchor="middle">API Services</text>
+                        <text x="370" y="265" fill="var(--color-text-muted)" font-family="var(--font-body)"
+                            font-size="11" text-anchor="middle">NestJS Core API</text>
+                        <text x="370" y="280" fill="var(--color-text-muted)" font-family="var(--font-body)"
+                            font-size="11" text-anchor="middle">FastAPI AI Server</text>
+                    </g>
+                    <!-- Database Tier -->
+                    <g class="arch-node" onclick="showArchInfo('db')">
+                        <rect x="530" y="80" width="160" height="100" rx="12" fill="var(--bg-surface)"
+                            stroke="var(--color-accent)" stroke-width="2" />
+                        <text x="610" y="125" fill="#fff" font-family="var(--font-display)" font-size="14"
+                            font-weight="bold" text-anchor="middle">Databases</text>
+                        <text x="610" y="145" fill="var(--color-text-muted)" font-family="var(--font-body)"
+                            font-size="11" text-anchor="middle">MongoDB (Primary)</text>
+                        <text x="610" y="160" fill="var(--color-text-muted)" font-family="var(--font-body)"
+                            font-size="11" text-anchor="middle">Redis (Cache)</text>
+                    </g>
+                    <!-- Storage & Media Server Tier -->
+                    <g class="arch-node" onclick="showArchInfo('media')">
+                        <rect x="530" y="320" width="160" height="100" rx="12" fill="var(--bg-surface)" stroke="#10b981"
+                            stroke-width="2" />
+                        <text x="610" y="365" fill="#fff" font-family="var(--font-display)" font-size="14"
+                            font-weight="bold" text-anchor="middle">Storage & CDN</text>
+                        <text x="610" y="385" fill="var(--color-text-muted)" font-family="var(--font-body)"
+                            font-size="11" text-anchor="middle">AWS S3 (Audio Files)</text>
+                        <text x="610" y="400" fill="var(--color-text-muted)" font-family="var(--font-body)"
+                            font-size="11" text-anchor="middle">HLS Audio Delivery</text>
+                    </g>
+                    <!-- Third Party Integrations -->
+                    <g class="arch-node" onclick="showArchInfo('integrations')">
+                        <rect x="290" y="30" width="160" height="100" rx="12" fill="var(--bg-surface)" stroke="#f59e0b"
+                            stroke-width="2" />
+                        <text x="370" y="75" fill="#fff" font-family="var(--font-display)" font-size="14"
+                            font-weight="bold" text-anchor="middle">Integrations</text>
+                        <text x="370" y="95" fill="var(--color-text-muted)" font-family="var(--font-body)"
+                            font-size="11" text-anchor="middle">Stripe & Apple Pay</text>
+                        <text x="370" y="110" fill="var(--color-text-muted)" font-family="var(--font-body)"
+                            font-size="11" text-anchor="middle">Firebase Notifications</text>
+                    </g>
+
+                    <path class="arch-pipe" d="M 210 250 L 290 250" stroke="rgba(255,255,255,0.2)" stroke-width="2"
+                        style="stroke-dasharray: 8; animation: dash 15s linear infinite;" />
+                    <path class="arch-pipe" d="M 370 200 L 370 130" stroke="rgba(255,255,255,0.2)" stroke-width="2"
+                        style="stroke-dasharray: 8; animation: dash 15s linear infinite;" />
+                    <path class="arch-pipe" d="M 450 250 L 490 250 L 490 130 L 530 130" stroke="rgba(255,255,255,0.2)"
+                        stroke-width="2" style="stroke-dasharray: 8; animation: dash 15s linear infinite;" />
+                    <path class="arch-pipe" d="M 450 250 L 490 250 L 490 370 L 530 370" stroke="rgba(255,255,255,0.2)"
+                        stroke-width="2" style="stroke-dasharray: 8; animation: dash 15s linear infinite;" />
+                </svg>
+            </div>
+            <div id="archDetailsCard" class="glass-panel"
+                style="max-width: 600px; margin: 1.5rem auto 0; padding: 1.5rem; display: none;">
+                <h4 id="archDetailsTitle" style="color: var(--color-primary); margin-bottom: 0.5rem;">Interactive
+                    Selection</h4>
+                <p id="archDetailsDesc">Click any tier in the architecture diagram to view engineering details.</p>
+            </div>
+        </section>
+
+        <!-- REVENUE ROUTING -->
+        <section id="revenue-flow">
+            <div class="section-header">
+                <h2>Platform Revenue Routing</h2>
+                <p>Transparent flow model showing funds splits, commission routing, and withdraw approvals.</p>
+            </div>
+
+            <div class="glass-panel revenue-canvas">
+                <div class="revenue-flow-svg-wrapper">
+                    <svg width="800" height="200" viewBox="0 0 800 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Node 1: User / Listener -->
+                        <rect x="20" y="50" width="140" height="80" rx="10" fill="var(--bg-surface)"
+                            stroke="var(--border-color)" />
+                        <text x="90" y="90" fill="#fff" font-family="var(--font-display)" font-size="13"
+                            font-weight="bold" text-anchor="middle">1. Music Listener</text>
+                        <text x="90" y="110" fill="var(--color-text-muted)" font-family="var(--font-body)"
+                            font-size="10" text-anchor="middle">Pays Subscription / Single</text>
+
+                        <!-- Node 2: SeyBitz Platform Vault -->
+                        <rect x="260" y="50" width="160" height="80" rx="10" fill="var(--bg-surface)"
+                            stroke="var(--color-primary)" stroke-width="2" />
+                        <text x="340" y="85" fill="#fff" font-family="var(--font-display)" font-size="13"
+                            font-weight="bold" text-anchor="middle">2. Platform Vault</text>
+                        <text x="340" y="105" fill="var(--color-primary)" font-family="var(--font-body)" font-size="10"
+                            text-anchor="middle">Stripe Splits Comm (15%)</text>
+
+                        <!-- Node 3: Artist Payout Wallet -->
+                        <rect x="520" y="50" width="150" height="80" rx="10" fill="var(--bg-surface)"
+                            stroke="var(--color-accent)" />
+                        <text x="595" y="85" fill="#fff" font-family="var(--font-display)" font-size="13"
+                            font-weight="bold" text-anchor="middle">3. Artist Wallet</text>
+                        <text x="595" y="105" fill="var(--color-accent)" font-family="var(--font-body)" font-size="10"
+                            text-anchor="middle">85% Share Allocated</text>
+
+                        <!-- Node 4: Creator Payout -->
+                        <circle cx="740" cy="90" r="30" fill="var(--color-success)" fill-opacity="0.1"
+                            stroke="var(--color-success)" />
+                        <text x="740" y="94" fill="#10b981" font-family="var(--font-display)" font-weight="bold"
+                            font-size="11" text-anchor="middle">Withdrawal</text>
+
+                        <!-- Connection Paths -->
+                        <path id="path1" d="M 160 90 L 260 90" stroke="rgba(255,255,255,0.1)" stroke-width="4" />
+                        <path id="path2" d="M 420 90 L 520 90" stroke="rgba(255,255,255,0.1)" stroke-width="4" />
+                        <path id="path3" d="M 670 90 L 710 90" stroke="rgba(255,255,255,0.1)" stroke-width="4" />
+
+                        <!-- Cash Particles -->
+                        <circle cx="160" cy="90" r="5" class="revenue-particle">
+                            <animateMotion dur="3s" repeatCount="indefinite" path="M 0 0 L 100 0" />
+                        </circle>
+                        <circle cx="420" cy="90" r="5" class="revenue-particle" style="fill: var(--color-accent);">
+                            <animateMotion dur="3s" repeatCount="indefinite" path="M 0 0 L 100 0" />
+                        </circle>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCOPE DELINEATION MATRIX -->
+        <section id="comparison">
+            <div class="section-header">
+                <h2>Feature Scope Delineation</h2>
+                <p>Comparison matrix between previous deliverables, new updates, and future scaling milestones.</p>
+            </div>
+
+            <div class="glass-panel" style="padding: 2rem;">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+                    <h3 style="color: #fff;">Scope Delineation Matrix</h3>
+                    <input type="text" id="comparisonSearch" placeholder="Search features..."
+                        style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: #fff; padding: 8px 16px; border-radius: 20px; outline: none; width: 250px;"
+                        oninput="filterComparisonTable()">
+                </div>
+                <div class="comparison-table-wrapper">
+                    <table class="comparison-table" id="comparisonTable">
+                        <thead>
+                            <tr>
+                                <th>Platform Feature</th>
+                                <th>Already Included</th>
+                                <th>Newly Added</th>
+                                <th>Future Scope</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dynamically loaded from features database -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- DEVELOPMENT TIMELINE -->
+        <section id="timeline">
+            <div class="section-header">
+                <h2>Suggested Development Phases</h2>
+                <p>Comprehensive delivery stages divided into target foundation phases and premium rollouts.</p>
+            </div>
+
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="glass-panel" style="padding: 2rem;">
+                        <span class="timeline-phase">Phase 1 - Foundation</span>
+                        <h4 style="color: #fff; margin: 4px 0 8px;">Blueprints & Setup</h4>
+                        <p style="font-size: 0.85rem;">UI/UX design, Authentication, User profiles, Artist profiles,
+                            Music library base, Audio streaming, Search filters, Playlist management.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="glass-panel" style="padding: 2rem;">
+                        <span class="timeline-phase">Phase 2 - Monetization</span>
+                        <h4 style="color: #fff; margin: 4px 0 8px;">Purchases & Revenue</h4>
+                        <p style="font-size: 0.85rem;">Song purchases, Album purchases, Payment integrations, Artist
+                            subscriptions routing, Revenue tracking logs.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="glass-panel" style="padding: 2rem;">
+                        <span class="timeline-phase">Phase 3 - Artist Platform</span>
+                        <h4 style="color: #fff; margin: 4px 0 8px;">Creator Suite</h4>
+                        <p style="font-size: 0.85rem;">Artist dashboard dashboards, Upload music streams, Analytics
+                            engine, Earnings ledger, Withdrawal processing.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="glass-panel" style="padding: 2rem;">
+                        <span class="timeline-phase">Phase 4 - Events</span>
+                        <h4 style="color: #fff; margin: 4px 0 8px;">Live Ticketing</h4>
+                        <p style="font-size: 0.85rem;">Event creation tools, Ticket booking workflow, QR code dynamic
+                            validation, Event dashboard panel.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="glass-panel" style="padding: 2rem;">
+                        <span class="timeline-phase">Phase 5 - Premium Services</span>
+                        <h4 style="color: #fff; margin: 4px 0 8px;">Smart Caching & Recommendations</h4>
+                        <p style="font-size: 0.85rem;">Offline downloads sync, Premium subscriptions model, High quality
+                            streaming formats, AI recommendation engine integration.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TECHNOLOGY MATRIX SECTION -->
+        <section id="tech-stack">
+            <div class="section-header">
+                <h2>Recommended Technology Stack</h2>
+                <p>Enterprise tools selected for speed, security, and low-latency audio delivery.</p>
+            </div>
+
+            <div class="tech-grid">
+                <div class="glass-panel tech-card">
+                    <i class="fa-brands fa-flutter" style="color: #02569B;"></i>
+                    <h4 style="color:#fff; margin-bottom: 5px;">Flutter</h4>
+                    <p style="font-size: 0.75rem;">Cross-platform Listener & Creator Apps</p>
+                </div>
+                <div class="glass-panel tech-card">
+                    <i class="fa-brands fa-react" style="color: #61DAFB;"></i>
+                    <h4 style="color:#fff; margin-bottom: 5px;">React.js</h4>
+                    <p style="font-size: 0.75rem;">Responsive Admin Control Panel</p>
+                </div>
+                <div class="glass-panel tech-card">
+                    <i class="fa-brands fa-node" style="color: #339933;"></i>
+                    <h4 style="color:#fff; margin-bottom: 5px;">Node.js / NestJS</h4>
+                    <p style="font-size: 0.75rem;">High throughput API Gateway & Core</p>
+                </div>
+                <div class="glass-panel tech-card">
+                    <i class="fa-solid fa-bolt" style="color: #009688;"></i>
+                    <h4 style="color:#fff; margin-bottom: 5px;">FastAPI</h4>
+                    <p style="font-size: 0.75rem;">Smart Recommendations & AI Search</p>
+                </div>
+                <div class="glass-panel tech-card">
+                    <i class="fa-solid fa-database" style="color: #336791;"></i>
+                    <h4 style="color:#fff; margin-bottom: 5px;">MongoDB</h4>
+                    <p style="font-size: 0.75rem;">Reliable metadata & ledger database</p>
+                </div>
+                <div class="glass-panel tech-card">
+                    <i class="fa-brands fa-aws" style="color: #FF9900;"></i>
+                    <h4 style="color:#fff; margin-bottom: 5px;">AWS S3 & CDN</h4>
+                    <p style="font-size: 0.75rem;">Optimized low-latency Cloudfront hosting</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FLOATING FEATURE DETAIL SPEC OVERLAY -->
+    <div class="feature-overlay" id="featureOverlay">
+        <div class="overlay-content">
+            <button class="close-overlay-btn" onclick="closeFeatureOverlay()"><i class="fa-solid fa-xmark"></i></button>
+            <span class="badge-new" id="overlayBadge">✨ New Feature</span>
+            <h2 id="overlayTitle" style="color: #fff; font-size: 2rem; margin-bottom: 1rem;">Feature Title</h2>
+            <p id="overlayDesc" style="font-size: 1.1rem; margin-bottom: 2rem;">Feature short overview description.</p>
+
+            <div class="overlay-grid">
+                <div class="overlay-item">
+                    <h4><i class="fa-solid fa-lightbulb"></i> Why it matters</h4>
+                    <p id="overlayWhy" style="font-size: 0.85rem;"></p>
+                </div>
+                <div class="overlay-item">
+                    <h4><i class="fa-solid fa-briefcase"></i> Business Benefit</h4>
+                    <p id="overlayBusiness" style="font-size: 0.85rem;"></p>
+                </div>
+                <div class="overlay-item">
+                    <h4><i class="fa-solid fa-user"></i> User Benefit</h4>
+                    <p id="overlayUser" style="font-size: 0.85rem;"></p>
+                </div>
+                <div class="overlay-item">
+                    <h4><i class="fa-solid fa-code"></i> Technical Overview</h4>
+                    <p id="overlayTechnical" style="font-size: 0.85rem;"></p>
+                </div>
+                <div class="overlay-item" style="grid-column: span 2;">
+                    <h4><i class="fa-solid fa-chart-line"></i> Future Scalability</h4>
+                    <p id="overlayScalability" style="font-size: 0.85rem;"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN DATABASE AND SCRIPTS -->
+    <script>
+        const featuresData = [
+            // TOP 15 SPOTLIGHT HIGHLIGHT NEW FEATURES
+            {
+                id: 1,
+                name: "AI Personalized Home Screen",
+                cat: "ai-smart",
+                scope: "newly-added",
+                spotlight: true,
+                priority: "High",
+                imgSrc: "./assets/ai_personalization.png",
+                journey: ["Open app", "AI loads tags", "Listen instant mix"],
+                desc: "Instead of showing static songs, every user gets a personalized homepage based on moods, locations, and past SeyBitz listens.",
+                why: "Boosts immediate app retention by matching local content with user vibes.",
+                business: "Higher listener engagement leads to improved subscription retention.",
+                user: "Find relevant local tracks without spending time searching.",
+                technical: "Integrates collaborative filtering models served via FastAPI endpoint.",
+                scalability: "Will expand to support real-time mood detection from wearable sensor data.",
+                future: "Wearable integration for physical biometrics detection."
+            },
+            {
+                id: 2,
+                name: "TikTok Style Music Discovery",
+                cat: "engagement",
+                scope: "newly-added",
+                spotlight: true,
+                priority: "High",
+                imgSrc: "./assets/tiktok_discovery.png",
+                journey: ["Swipe clips feed", "Like and preview", "Buy full track"],
+                desc: "Short vertical music preview clips that users can swipe to like, follow artists, save, or purchase.",
+                why: "Imitates popular vertical media consumption to boost regional track discovery.",
+                business: "Drives song purchases and artist subscriptions up by over 40% via organic clips.",
+                user: "Fun, effortless way to preview and discover new music styles.",
+                technical: "Leverages CDN chunks caching and pre-fetching of next 3 preview media assets.",
+                scalability: "Future integrations with video generation models to auto-create animation visuals.",
+                future: "AI video generation clips matching audio beats."
+            },
+            {
+                id: 7,
+                name: "Live Streaming Concerts",
+                cat: "monetization",
+                scope: "newly-added",
+                spotlight: true,
+                priority: "High",
+                imgSrc: "./assets/live_concerts.png",
+                journey: ["Buy concert pass", "Stream live video", "Replay on sub"],
+                desc: "Ticketing system allowing distant fans to pay for online access to live-broadcasted concerts.",
+                why: "Expands physical event capacities to global listeners.",
+                business: "New digital ticketing revenue splits.",
+                user: "Watch live performances from Praslin or La Digue anywhere in the world.",
+                technical: "HLS video stream delivery via AWS CloudFront.",
+                scalability: "Support multi-angle camera feeds.",
+                future: "Spatial VR streaming support."
+            },
+            {
+                id: 5,
+                name: "VIP Fan Club Memberships",
+                cat: "monetization",
+                scope: "newly-added",
+                spotlight: true,
+                priority: "High",
+                imgSrc: "./assets/vip_membership.png",
+                journey: ["Sub to vip tier", "Unlock private tracks", "Get merch discount"],
+                desc: "Allows artists to establish private subscriber circles offering private audio tracks and discount event admissions.",
+                why: "Diversifies monetization models beyond standard platforms commissions.",
+                business: "Attracts key Seychelles influencers by giving them higher payout ratios.",
+                user: "Access behind-the-scenes content and exclusive community perks.",
+                technical: "Role-based subscription models with token authorization keys.",
+                scalability: "Can support decentralized ticket tokens in the future.",
+                future: "Decentralized collectible tokens validation."
+            },
+            {
+                id: 14,
+                name: "Interactive Lyrics Sync",
+                cat: "engagement",
+                scope: "newly-added",
+                spotlight: true,
+                priority: "Medium",
+                imgSrc: "./assets/interactive_lyrics.png",
+                journey: ["Play track", "Tap lyrics line", "Jump playback"],
+                desc: "Displays synced lyrics, allowing users to jump to track intervals by tapping lyric sentences.",
+                why: "Encourages deep interaction and helps fans learn local language music.",
+                business: "Higher average engagement rates per song play.",
+                user: "Sing along with precision and jump directly to favorite segments.",
+                technical: "LRC timed format parsing synced with player timeline updates.",
+                scalability: "Real-time AI lyric translation to key tourist languages.",
+                future: "Real-time translation to major international languages."
+            },
+            {
+                id: 21,
+                name: "AI Playlist Creator",
+                cat: "ai-smart",
+                scope: "newly-added",
+                spotlight: true,
+                priority: "Medium",
+                imgSrc: "./assets/ai_playlist.png",
+                journey: ["Input tag text", "AI parses catalog", "Get custom mix"],
+                desc: "Creates custom playlists dynamically from prompt statements like 'Create beach party mixes'.",
+                why: "Highly engaging interactive tool utilizing LLMs for customization.",
+                business: "Saves catalog curation efforts and acts as a flagship premium hook.",
+                user: "Generate complex custom playlists in seconds.",
+                technical: "FastAPI semantic mapping against tag metadata databases.",
+                scalability: "Auto-generation of matching playlist covers based on prompt.",
+                future: "Dynamic artwork generation matching playlist vibe."
+            },
+            {
+                id: 10,
+                name: "Synchronized Listening Party",
+                cat: "engagement",
+                scope: "newly-added",
+                spotlight: true,
+                priority: "High",
+                imgSrc: "./assets/listening_party.png",
+                journey: ["Join party room", "Sync timelines", "Chat while playing"],
+                desc: "Allows groups of friends to sync playback real-time while chatting inside the application.",
+                why: "Enables shared musical enjoyment across distances.",
+                business: "Viral acquisition mechanism as users invite friends to join rooms.",
+                user: "Listen with friends synchronously as if sharing earphones.",
+                technical: "WebSocket control state machine synchronizing timeline offset metrics.",
+                scalability: "Support video call overlay inside rooms.",
+                future: "Video overlays and speaker configurations."
+            },
+            {
+                id: 8,
+                name: "Artist Stories",
+                cat: "engagement",
+                scope: "newly-added",
+                spotlight: true,
+                priority: "Medium",
+                imgSrc: "./assets/artist_stories.png",
+                journey: ["Tap artist icon", "View 24h story", "Interact via polls"],
+                desc: "Short-lived visual clips showing studio preparation, setup, or upcoming release countdowns.",
+                why: "Increases daily app usage via modern ephemeral design patterns.",
+                business: "Provides native promotion space for artists.",
+                user: "Get a quick, personal peek behind the scenes of favorite artists.",
+                technical: "Indexed media objects in AWS S3 storage with 24-hour expiration logs.",
+                scalability: "Interactive sticker support (polls, Q&As) in stories.",
+                future: "Interactive sticker APIs integrations."
+            },
+            {
+                id: 9,
+                name: "Premiere Releases & Countdowns",
+                cat: "engagement",
+                scope: "newly-added",
+                spotlight: true,
+                priority: "High",
+                imgSrc: "./assets/premiere_releases.png",
+                journey: ["Pre-save release", "Timer counts down", "Join launch party"],
+                desc: "Pre-save countdown landing pages that release songs to groups of waiting listeners simultaneously.",
+                why: "Builds excitement leading up to critical album drops.",
+                business: "Drives pre-sales and immediate release-day streaming numbers.",
+                user: "Be first to listen and chat with other waiting fans.",
+                technical: "Server-driven countdown timers synced via server-sent events.",
+                scalability: "Collaborative release campaigns with brand sponsorships.",
+                future: "Sponsor brand integration on launch pages."
+            },
+            {
+                id: 24,
+                name: "Merchandise Store Integration",
+                cat: "monetization",
+                scope: "newly-added",
+                spotlight: true,
+                priority: "Medium",
+                imgSrc: "./assets/merchandise_store.png",
+                journey: ["Browse profile store", "Order clothing item", "Track checkout"],
+                desc: "Allows artists to advertise vinyl releases, clothing items, and accessories inside profiles.",
+                why: "Unlocks standard e-commerce sales pathways for musical creators.",
+                business: "Generates physical merch checkout transaction fee cuts.",
+                user: "Directly support local creators by purchasing physical merch items.",
+                technical: "Lightweight payment integration connecting to Stripe APIs.",
+                scalability: "Fulfilment APIs integrations for automated delivery logistics.",
+                future: "Global print-on-demand backend alignments."
+            },
+            {
+                id: 13,
+                name: "Smart Recommendation Engine",
+                cat: "ai-smart",
+                scope: "newly-added",
+                spotlight: true,
+                priority: "High",
+                imgSrc: "./assets/recommendation_engine.png",
+                journey: ["Play track", "Rec engine updates", "Queue matching vibes"],
+                desc: "Advanced recommendation system incorporating time of day, current weather, and user demographics.",
+                why: "Drives personalized content distribution automatically.",
+                business: "Higher conversion to premium tiers from highly accurate suggestions.",
+                user: "Discover hidden local talents matching your specific tastes.",
+                technical: "Hybrid filtering model combining content and collaborative criteria.",
+                scalability: "Edge recommendation compute models directly inside Flutter apps.",
+                future: "On-device edge computing logic."
+            },
+            {
+                id: 33,
+                name: "Regional Trending Charts",
+                cat: "ai-smart",
+                scope: "newly-added",
+                spotlight: true,
+                priority: "Medium",
+                imgSrc: "./assets/regional_trending.png",
+                journey: ["Select island filter", "Browse local trend", "Play hit song"],
+                desc: "Curation of popularity charts filtered by specific islands (Mahé, Praslin, La Digue).",
+                why: "Highlights specific regional hits that might get lost on global lists.",
+                business: "Promotes hyper-local engagement from smaller islands.",
+                user: "See what songs are currently popular around your neighborhood.",
+                technical: "Geo-partitioned play logs computed in batch runs every 6 hours.",
+                scalability: "Real-time live popularity ticker widget.",
+                future: "Live charts ticker overlays."
+            },
+            {
+                id: 22,
+                name: "Event Heat Map",
+                cat: "engagement",
+                scope: "newly-added",
+                spotlight: true,
+                priority: "Medium",
+                imgSrc: "./assets/event_heat_map.png",
+                journey: ["Open heat map", "Tap venue glowing pin", "Buy tickets"],
+                desc: "Locates regional live shows and event hubs on a map layout, pointing to booking pages.",
+                why: "Visualizes entertainment densities to drive ticket ticket conversions.",
+                business: "Boosts event ticket booking commissions.",
+                user: "Quickly view what events are active nearby this weekend.",
+                technical: "Leaflet or Mapbox SDK rendering geo-located event nodes.",
+                scalability: "Live crowd size density overlays.",
+                future: "Real-time audience size overlay graphs."
+            },
+            {
+                id: 29,
+                name: "Artist Analytics 2.0 Dashboard",
+                cat: "artist-tools",
+                scope: "newly-added",
+                spotlight: true,
+                priority: "High",
+                imgSrc: "./assets/artist_analytics.png",
+                journey: ["Open dashboard", "Track heatmap play", "Analyze retention"],
+                desc: "Provides real-time maps showing stream densities, gender profiles, and track retention graphs.",
+                why: "Gives creators enterprise-grade intelligence to plan tour nodes.",
+                business: "Increases platform utility for commercial music groups.",
+                user: "Detailed breakdowns of how their music is received.",
+                technical: "Clickhouse analytics warehouse database tracking listener logs.",
+                scalability: "AI-based forecasting predicting upcoming track success.",
+                future: "Predictive booking algorithms integration."
+            },
+            {
+                id: 40,
+                name: "AI Music Chat Assistant",
+                cat: "ai-smart",
+                scope: "newly-added",
+                spotlight: true,
+                priority: "Medium",
+                imgSrc: "./assets/ai_chat_assistant.png",
+                journey: ["Open chat window", "Ask for beach mix", "Play auto generated queue"],
+                desc: "Conversational interface allowing listeners to request tracks, ask questions, or discover artists via chat.",
+                why: "Pioneering interactive tool transforming app navigation into conversations.",
+                business: "Differentiates SeyBitz as an advanced local platform.",
+                user: "Easily retrieve tracks using natural text conversations.",
+                technical: "FastAPI server running LLM agents connected to database indices.",
+                scalability: "Voice search integrations in smart home appliances.",
+                future: "Voice assistant SDK configurations."
+            },
+
+            // OTHER NEW FEATURES
+            {
+                id: 3,
+                name: "Fan Community Forum",
+                cat: "engagement",
+                scope: "newly-added",
+                desc: "Dedicated forum boards where users vote on song releases, share artwork, and discuss island music history.",
+                why: "Builds a sticky community directly in SeyBitz, bypassing third-party chat apps.",
+                business: "Higher user session length and daily active user metrics.",
+                user: "Connect with like-minded music fans and local creators easily.",
+                technical: "WebSockets-based messaging boards with real-time updates and moderation logic.",
+                scalability: "Integrate regional moderators and automated toxicity filtering tools."
+            },
+            {
+                id: 4,
+                name: "Artist Verification Tiers",
+                cat: "artist-tools",
+                scope: "newly-added",
+                desc: "Multiple badge styles representing Rising, Top, Verified, and Featured artists to build trust.",
+                why: "Creates a gamified prestige layer that motivates creators to publish more content.",
+                business: "Higher verification rates build copyright audit credibility.",
+                user: "Easy classification of high-quality verified audio files.",
+                technical: "Stored metadata roles mapped to admin-panel verification controls.",
+                scalability: "Integration with external digital identity services."
+            },
+            {
+                id: 6,
+                name: "Live Audio Rooms",
+                cat: "engagement",
+                scope: "newly-added",
+                desc: "Clubhouse-style rooms where artists can organize album release listening events and answer questions.",
+                why: "High interactivity without the production overhead of high-resolution video streams.",
+                business: "Immersive events drive subscription purchases.",
+                user: "Voice chat directly with beloved island creators.",
+                technical: "WebRTC audio channels with auto-scalable room servers.",
+                scalability: "Support automatic recording and podcast publishing."
+            },
+            {
+                id: 11,
+                name: "Mood-Based Music Navigation",
+                cat: "ai-smart",
+                scope: "newly-added",
+                desc: "Enables users to browse and auto-generate playlists based on target emotional moods (happy, romantic, relaxing, gym).",
+                why: "Simplifies music selection to match current activities.",
+                business: "Increases average play session duration by reducing choice fatigue.",
+                user: "Instantly find songs that match how you feel.",
+                technical: "Audio tracks annotated with mood classification keywords.",
+                scalability: "Automatic biometric mapping from smartwatch sensors."
+            },
+            {
+                id: 12,
+                name: "AI Smart Search",
+                cat: "ai-smart",
+                scope: "newly-added",
+                desc: "Natural language search engine returning results matching queries like 'happy reggae under 3 minutes'.",
+                why: "Simplifies searching for users who don't recall track names.",
+                business: "Enhances library accessibility, routing listens to catalog depth.",
+                user: "Retrieve target vibes using conversational queries.",
+                technical: "Vector search integration via MongoDB pgvector indexing.",
+                scalability: "Voice-activated query processing."
+            },
+            {
+                id: 15,
+                name: "Music Sharing Cards",
+                cat: "engagement",
+                scope: "newly-added",
+                desc: "Generates beautiful Now-Playing visual cards optimized for Instagram, TikTok, and WhatsApp sharing.",
+                why: "Drives organic, zero-cost marketing across social networks.",
+                business: "Viral acquisition loops that reduce client acquisition costs.",
+                user: "Show off favorite local tracks in premium formats.",
+                technical: "Canvas-based dynamic image rendering engine inside the mobile app.",
+                scalability: "Interactive shared links pointing back directly to web player entrypoints."
+            },
+            {
+                id: 16,
+                name: "Audio Quality Selector",
+                cat: "engagement",
+                scope: "newly-added",
+                desc: "Allows choosing between Normal, High, Very High, and Lossless stream files to adapt to connection speeds.",
+                why: "Ensures smooth playback on restricted local networks while satisfying audiophiles on Wi-Fi.",
+                business: "Reduces data transit fees by defaulting to optimal compressed structures.",
+                user: "Save mobile data or enjoy studio-quality sound when desired.",
+                technical: "Multi-bitrate HLS streams configuration dynamically requested.",
+                scalability: "Future Dolby Atmos spatial audio capability."
+            },
+            {
+                id: 17,
+                name: "Sleep Timer Utility",
+                cat: "engagement",
+                scope: "newly-added",
+                desc: "Configurable sleep countdown that halts audio after selected periods (10m, 30m, end of track).",
+                why: "Utility feature popular among late-night listener cohorts.",
+                business: "Avoids wasted streaming usage and data transfer on sleeping clients.",
+                user: "Fall asleep to music without draining battery or data.",
+                technical: "Local app background execution task listener.",
+                scalability: "Integrate with smartwatch sleep detection to shut down automatically."
+            },
+            {
+                id: 18,
+                name: "Cross-Device Playback Sync",
+                cat: "engagement",
+                scope: "newly-added",
+                desc: "Ensures listeners can transition listening state between phone, browser, and desktop screens seamlessly.",
+                why: "Matches premium standards established by global streaming players.",
+                business: "Enables SeyBitz usage throughout the home and office.",
+                user: "Resume listening instantly from the desk after arriving home.",
+                technical: "Centrally stored user-state session sync via WebSockets.",
+                scalability: "Integration with smart speaker SDK ecosystems."
+            },
+            {
+                id: 19,
+                name: "Offline Smart Downloads",
+                cat: "engagement",
+                scope: "newly-added",
+                desc: "Auto-caches liked items, dynamic custom mixes, and releases from subscribed artists on local devices.",
+                why: "Guarantees offline enjoyment in low-connectivity zones.",
+                business: "Saves cloud bandwidth when files are played repeatedly from cache.",
+                user: "Offline files are populated without manual selection actions.",
+                technical: "Background download tasks scheduled using SQLite databases.",
+                scalability: "Adaptive cache logic adjusting sizes to device disk storage capacity."
+            },
+            {
+                id: 20,
+                name: "Smart Queue Generator",
+                cat: "ai-smart",
+                scope: "newly-added",
+                desc: "Auto-populates follow-up items based on initial playlist selections, matching music style tags.",
+                why: "Maintains uninterrupted playback flows to maximize user sessions.",
+                business: "Prevents immediate app drop-off rates.",
+                user: "Keeps listening to similar vibes without manual queue management.",
+                technical: "Tag matching heuristic served locally in application memory.",
+                scalability: "Deep reinforcement learning queues."
+            },
+            {
+                id: 23,
+                name: "QR Ticket Validation Pro",
+                cat: "monetization",
+                scope: "newly-added",
+                desc: "Dynamic, rotating anti-fraud QR tickets working offline for event validation checks.",
+                why: "Prevents ticket duplication fraud and speeds up venue queues.",
+                business: "Increases venue trust in SeyBitz booking processes.",
+                user: "Secure tickets that load without active mobile connections at gates.",
+                technical: "TOTP-based dynamic QR generations working with offline hashes.",
+                scalability: "Direct NFC validation support."
+            },
+            {
+                id: 25,
+                name: "Direct Creator Donations",
+                cat: "monetization",
+                scope: "newly-added",
+                desc: "Allows users to support creators using instant, tip-jar-style payments.",
+                why: "Enables direct financial support for niche regional creators.",
+                business: "Increases artist loyalty to SeyBitz ecosystem.",
+                user: "Express direct gratitude to local artists through voluntary payments.",
+                technical: "Microtransaction rails optimized for low fee rates.",
+                scalability: "Automatic recurring backing configurations."
+            },
+            {
+                id: 26,
+                name: "Achievement Milestones",
+                cat: "engagement",
+                scope: "newly-added",
+                desc: "Awards badges like 'Top Listener' or 'Early Supporter' based on listening metrics.",
+                why: "Utilizes classic gamification loops to drive user commitment.",
+                business: "Higher listener retention and app loyalty indicators.",
+                user: "Collect unique profile rewards showcasing musical support.",
+                technical: "Metric tracker background jobs monitoring listening hours.",
+                scalability: "Convert milestone achievements into actual discount rewards."
+            },
+            {
+                id: 27,
+                name: "Loyalty Points Program",
+                cat: "monetization",
+                scope: "newly-added",
+                desc: "Earn system points redeemable for physical merch or premium subscription time.",
+                why: "Rewards constant usage to defend against international entrants.",
+                business: "Improves lifetime value metrics per listener account.",
+                user: "Get actual rewards just for listening to local songs.",
+                technical: "Central loyalty ledger system recording action entries.",
+                scalability: "Sponsorship alignments letting local businesses offer rewards."
+            },
+            {
+                id: 28,
+                name: "Referral Reward Engine",
+                cat: "engagement",
+                scope: "newly-added",
+                desc: "Grants free premium access days to accounts driving successfully verified referrals.",
+                why: "Cost-effective user acquisition model.",
+                business: "Drives exponential organic listener base scaling.",
+                user: "Earn premium features by sharing the platform with friends.",
+                technical: "Unique invite keys tracking signups via deep linking.",
+                scalability: "Tier-based rewards structures for super-influencers."
+            },
+            {
+                id: 30,
+                name: "Fingerprint Copyright Shield",
+                cat: "admin-core",
+                scope: "newly-added",
+                desc: "Checks uploaded files against a fingerprint database to prevent copyright abuse.",
+                why: "Ensures compliance with legal and label copyright guidelines.",
+                business: "Avoids costly litigation risks for the platform.",
+                user: "Protection for original artists against copycats.",
+                technical: "Fast fingerprinting comparison scripts running post-upload.",
+                scalability: "Integrations with global copyright registers."
+            },
+            {
+                id: 31,
+                name: "AI Audio Enhancer",
+                cat: "artist-tools",
+                scope: "newly-added",
+                desc: "Normalizes track volume levels, clears silence, and flags metadata inconsistencies automatically.",
+                why: "Assures consistent quality levels across all uploaded tracks.",
+                business: "Polished audio experience matches top tier streaming libraries.",
+                user: "No sudden sound level jumps between tracks.",
+                technical: "Fast FFmpeg-based automated processing pipeline.",
+                scalability: "Real-time, cloud-based audio denoising tools."
+            },
+            {
+                id: 32,
+                name: "Multi-Currency Checkout",
+                cat: "monetization",
+                scope: "newly-added",
+                desc: "Accepts payments in USD, SCR, EUR, and GBP dynamically based on location.",
+                why: "Accommodates tourists visiting Seychelles and international listeners.",
+                business: "Maximizes checkout conversions from international travelers.",
+                user: "Pay in your local currency without high bank exchange fees.",
+                technical: "Dynamic currency conversions via Stripe API checkout integration.",
+                scalability: "Automatic localization of tax calculations."
+            },
+            {
+                id: 34,
+                name: "Seasonal Collections",
+                cat: "engagement",
+                scope: "newly-added",
+                desc: "Custom holiday playlists, festival mixes, and independence anniversary compilations.",
+                why: "Connects app experience directly to real-life cultural events.",
+                business: "Higher usage spikes during holiday and tourist seasons.",
+                user: "Get curated tracks for festive celebrations.",
+                technical: "CMS-managed playlists tags promoted directly to home page sliders.",
+                scalability: "Dynamic collection pages co-curated with brands."
+            },
+            {
+                id: 35,
+                name: "Editorial Picks Suite",
+                cat: "engagement",
+                scope: "newly-added",
+                desc: "Curated weekly picks from local SeyBitz editors, highlighting new talents.",
+                why: "Guarantees that quality works get featured regardless of recommendation algorithms.",
+                business: "Supports local artist growth and strengthens platform relationships.",
+                user: "Find hidden gems selected by musical experts.",
+                technical: "Admin portal interface for catalog curators to schedule promo placements.",
+                scalability: "Sponsorship deals for premium editorial slots."
+            },
+            {
+                id: 36,
+                name: "Fan Contests & Challenges",
+                cat: "engagement",
+                scope: "newly-added",
+                desc: "Dance contests and remix competitions where users vote on submissions.",
+                why: "High user-generated content engagement loops.",
+                business: "Viral social network exposure for platform challenges.",
+                user: "Participate in local contests and win exclusive rewards.",
+                technical: "Contest entry submission paths and voting security tools.",
+                scalability: "Automated video overlays for social exports."
+            },
+            {
+                id: 37,
+                name: "Local Podcast Channels",
+                cat: "engagement",
+                scope: "newly-added",
+                desc: "Dedicated segment for local speech shows, cultural interviews, and tutorials.",
+                why: "Expands app utility into non-music audio segments.",
+                business: "Attracts podcast advertisers for ad insertions.",
+                user: "Listen to regional speech shows and talk series in one application.",
+                technical: "RSS feed indexing along with custom local audio hosting structures.",
+                scalability: "Auto transcription and translations capabilities."
+            },
+            {
+                id: 38,
+                name: "Music Videos Portal",
+                cat: "engagement",
+                scope: "newly-added",
+                desc: "Dedicated section for streaming HD official videos and interview reels.",
+                why: "Offers a complete visual media ecosystem.",
+                business: "Higher premium subscription conversions by bundle-locking video playback.",
+                user: "Watch music videos without bouncing to YouTube.",
+                technical: "Adaptive streaming video format configs running on AWS MediaConvert.",
+                scalability: "Support for 4K streaming and TV applications."
+            },
+            {
+                id: 39,
+                name: "In-App Creator Messaging",
+                cat: "engagement",
+                scope: "newly-added",
+                desc: "Controlled messaging path connecting fans with verified artists.",
+                why: "Creates high-value connection points directly inside the app.",
+                business: "Creates VIP subscription opportunities.",
+                user: "Receive announcements or send messages to favorite creators.",
+                technical: "Encrypted messaging database paths with access checks.",
+                scalability: "Auto reply templates for artists."
+            },
+
+            // EXISTING BASE FEATURES (from Old Proposal PDF)
+            {
+                id: 101,
+                name: "Digital Music Streaming",
+                cat: "engagement",
+                scope: "existing",
+                desc: "Play and pause tracks, skip, shuffle, repeat, and manage audio queues in the background."
+            },
+            {
+                id: 102,
+                name: "Song & Album Purchases",
+                cat: "monetization",
+                scope: "existing",
+                desc: "Enables fans to buy digital singles and albums directly using integrated payment structures."
+            },
+            {
+                id: 103,
+                name: "Artist Subscriptions",
+                cat: "monetization",
+                scope: "existing",
+                desc: "Monthly and annual payment options to support specific creator channels."
+            },
+            {
+                id: 104,
+                name: "Playlist Management",
+                cat: "engagement",
+                scope: "existing",
+                desc: "Create, edit, share, and track recently played list histories."
+            },
+            {
+                id: 105,
+                name: "Concert Ticket Booking",
+                cat: "monetization",
+                scope: "existing",
+                desc: "Browse local concerts and purchase tickets with QR-code delivery."
+            },
+            {
+                id: 106,
+                name: "Offline Caching (Premium)",
+                cat: "engagement",
+                scope: "existing",
+                desc: "Download tracks to listen without cellular coverage."
+            },
+            {
+                id: 107,
+                name: "Creator Dashboard Overview",
+                cat: "artist-tools",
+                scope: "existing",
+                desc: "Review basic stream metrics, subscriber lists, and payout request logs."
+            },
+            {
+                id: 108,
+                name: "Admin Control Center",
+                cat: "admin-core",
+                scope: "existing",
+                desc: "Manage user roles, catalog tags, payments, and copyright complaints."
+            }
+        ];
+
+        // RENDER HIGHLIGHT SPOTLIGHT CARDS
+        function renderSpotlight() {
+            const spotlightContainer = document.getElementById('spotlightContainer');
+            spotlightContainer.innerHTML = '';
+
+            const spotlights = featuresData.filter(feat => feat.spotlight);
+            spotlights.forEach(feat => {
+                const card = document.createElement('div');
+                card.className = 'glass-panel spotlight-card';
+
+                let stepsHTML = '';
+                if (feat.journey) {
+                    stepsHTML = feat.journey.map((step, idx) => `
+                        <div class="journey-step">
+                            <span style="color:var(--color-primary); font-weight:bold; margin-right:4px;">${idx + 1}.</span> ${step}
+                        </div>
+                    `).join('<i class="fa-solid fa-chevron-right" style="color:var(--color-accent); font-size:0.8rem;"></i>');
+                }
+
+                // Custom Visual SVGs representing illustrations for the premium experience
+                let fallbackSVG = `
+                    <svg width="240" height="240" viewBox="0 0 200 200" fill="none">
+                        <circle cx="100" cy="100" r="60" fill="rgba(255,255,255,0.02)" stroke="var(--border-color)" stroke-width="1"/>
+                        <path d="M92 90 L 112 100 L 92 110 Z" fill="#fff"/>
+                    </svg>
+                `;
+
+                if (feat.id === 1) { // AI personalized home
+                    fallbackSVG = `
+                        <svg width="240" height="240" viewBox="0 0 200 200" fill="none">
+                            <circle cx="100" cy="100" r="80" fill="url(#ai-grad)" fill-opacity="0.1" stroke="var(--color-primary)" stroke-width="2"/>
+                            <path d="M50 100 Q 75 40, 100 100 T 150 100" stroke="var(--color-secondary)" stroke-width="3" stroke-linecap="round"/>
+                            <path d="M50 120 Q 75 70, 100 120 T 150 120" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+                            <circle cx="100" cy="100" r="10" fill="#fff" filter="drop-shadow(0 0 10px var(--color-primary))"/>
+                            <defs>
+                                <linearGradient id="ai-grad" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="var(--color-primary)"/>
+                                    <stop offset="1" stop-color="var(--color-accent)"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    `;
+                } else if (feat.id === 2) { // TikTok Discovery
+                    fallbackSVG = `
+                        <svg width="240" height="240" viewBox="0 0 200 200" fill="none">
+                            <rect x="50" y="20" width="100" height="160" rx="16" fill="#000" stroke="var(--color-primary)" stroke-width="3"/>
+                            <circle cx="100" cy="90" r="24" fill="var(--gradient-accent)" fill-opacity="0.2" stroke="var(--color-primary)" stroke-width="2"/>
+                            <path d="M92 80 L 114 90 L 92 100 Z" fill="#fff"/>
+                            <path d="M60 150 L 120 150" stroke="rgba(255,255,255,0.4)" stroke-width="4" stroke-linecap="round"/>
+                            <path d="M60 160 L 90 160" stroke="rgba(255,255,255,0.4)" stroke-width="4" stroke-linecap="round"/>
+                        </svg>
+                    `;
+                } else if (feat.id === 7) { // Live concert streaming
+                    fallbackSVG = `
+                        <svg width="240" height="240" viewBox="0 0 200 200" fill="none">
+                            <rect x="30" y="40" width="140" height="100" rx="12" fill="var(--bg-surface)" stroke="var(--color-success)" stroke-width="2"/>
+                            <path d="M30 110 L 170 110" stroke="var(--color-success)" stroke-width="2"/>
+                            <circle cx="100" cy="75" r="16" fill="var(--color-success)" fill-opacity="0.1" stroke="var(--color-success)" stroke-width="2"/>
+                            <polygon points="95,70 110,75 95,80" fill="var(--color-success)"/>
+                            <path d="M50 160 H 150" stroke="rgba(255,255,255,0.2)" stroke-width="4" stroke-linecap="round"/>
+                        </svg>
+                    `;
+                } else if (feat.id === 5) { // VIP Fan Club
+                    fallbackSVG = `
+                        <svg width="240" height="240" viewBox="0 0 200 200" fill="none">
+                            <polygon points="100,30 120,70 165,75 130,110 140,155 100,130 60,155 70,110 35,75 80,70" fill="none" stroke="var(--color-warning)" stroke-width="3" stroke-linejoin="round"/>
+                            <circle cx="100" cy="95" r="12" fill="var(--color-warning)"/>
+                        </svg>
+                    `;
+                }
+
+                let illustrationContent = fallbackSVG;
+                if (feat.imgSrc) {
+                    illustrationContent = `
+                        <img src="${feat.imgSrc}" alt="${feat.name}" class="spotlight-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="fallback-container" style="display:none; width:100%; height:100%; justify-content:center; align-items:center;">
+                            ${fallbackSVG}
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div class="spotlight-visual">
+                        ${illustrationContent}
+                    </div>
+                    <div>
+                        <span class="tag-premium">✨ NEW FEATURE (Priority: ${feat.priority})</span>
+                        <h3>${feat.name}</h3>
+                        <p class="description">${feat.desc}</p>
+                        
+                        <div class="details-grid">
+                            <div class="detail-block">
+                                <h5><i class="fa-solid fa-lightbulb"></i> Why Needed</h5>
+                                <p>${feat.why}</p>
+                            </div>
+                            <div class="detail-block">
+                                <h5><i class="fa-solid fa-briefcase"></i> Business Value</h5>
+                                <p>${feat.business}</p>
+                            </div>
+                            <div class="detail-block">
+                                <h5><i class="fa-solid fa-code"></i> Technical Details</h5>
+                                <p>${feat.technical}</p>
+                            </div>
+                            <div class="detail-block">
+                                <h5><i class="fa-solid fa-arrow-up-right-dots"></i> Future Expansion</h5>
+                                <p>${feat.future || 'Further ML iterations.'}</p>
+                            </div>
+                            <div class="user-journey-block">
+                                <h5><i class="fa-solid fa-route"></i> User Journey</h5>
+                                <div class="journey-steps">
+                                    ${stepsHTML}
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-secondary" style="padding: 10px 20px; font-size: 0.9rem;" onclick="openFeatureOverlay(${feat.id})">
+                            Detailed Specifications <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                `;
+                spotlightContainer.appendChild(card);
+            });
+        }
+
+        // RENDER FEATURES ON CATALOGUE GRID
+        function renderFeatures(filterScope = 'all', filterCat = 'all') {
+            const grid = document.getElementById('featuresGrid');
+            grid.innerHTML = '';
+
+            featuresData.forEach(feat => {
+                if (filterScope !== 'all' && feat.scope !== filterScope) return;
+                if (filterCat !== 'all' && feat.cat !== filterCat) return;
+
+                const card = document.createElement('div');
+                card.className = `glass-panel feature-card`;
+                card.setAttribute('data-scope', feat.scope);
+                card.setAttribute('data-cat', feat.cat);
+
+                const isNew = feat.scope === 'newly-added';
+                const badge = isNew
+                    ? '<span class="badge-new">✨ New Feature</span>'
+                    : '<span class="badge-old">Included in Base</span>';
+
+                let actionBtn = '';
+                if (isNew) {
+                    actionBtn = `<button class="feature-detail-btn" onclick="openFeatureOverlay(${feat.id})">Detailed Specs <i class="fa-solid fa-arrow-right"></i></button>`;
+                }
+
+                let iconClass = "fa-music";
+                if (feat.cat === "ai-smart") iconClass = "fa-brain";
+                else if (feat.cat === "monetization") iconClass = "fa-circle-dollar-to-slot";
+                else if (feat.cat === "artist-tools") iconClass = "fa-microphone-lines";
+                else if (feat.cat === "admin-core") iconClass = "fa-user-shield";
+
+                card.innerHTML = `
+                    ${badge}
+                    <div class="feature-icon-container">
+                        <i class="fa-solid ${iconClass}"></i>
+                    </div>
+                    <h3>${feat.name}</h3>
+                    <p>${feat.desc}</p>
+                    ${actionBtn}
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // GLOBAL SCOPE SELECTION
+        let currentScope = 'all';
+        let currentCat = 'all';
+
+        function setGlobalScopeFilter(scope, btn) {
+            currentScope = scope;
+            document.querySelectorAll('.scope-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderFeatures(currentScope, currentCat);
+
+            const spotlightSection = document.getElementById('spotlight');
+            if (scope === 'existing') {
+                spotlightSection.style.display = 'none';
+            } else {
+                spotlightSection.style.display = '';
+            }
+
+            document.querySelectorAll('#comparisonTable tbody tr').forEach(tr => {
+                const badge = tr.querySelector('.scope-badge');
+                if (scope === 'all') {
+                    tr.style.display = '';
+                } else if (scope === 'existing' && badge && badge.classList.contains('included')) {
+                    tr.style.display = '';
+                } else if (scope === 'newly-added' && badge && badge.classList.contains('new')) {
+                    tr.style.display = '';
+                } else {
+                    tr.style.display = 'none';
+                }
+            });
+        }
+
+        function filterCategory(cat, btn) {
+            currentCat = cat;
+            document.querySelectorAll('.feature-cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderFeatures(currentScope, currentCat);
+        }
+
+        // MOBILE MODE TOGGLER
+        function toggleMobileAppMode(mode) {
+            const listenerBtn = document.getElementById('listenerModeToggleBtn');
+            const artistBtn = document.getElementById('artistModeToggleBtn');
+
+            const listenerCtrl = document.getElementById('listenerMockupControls');
+            const artistCtrl = document.getElementById('artistMockupControls');
+
+            if (mode === 'listener') {
+                listenerBtn.classList.add('active');
+                artistBtn.classList.remove('active');
+                listenerCtrl.style.display = 'flex';
+                artistCtrl.style.display = 'none';
+
+                // Select first listener screen
+                selectMobileScreen('home', listenerCtrl.querySelector('.mockup-selector-btn'));
+            } else {
+                listenerBtn.classList.remove('active');
+                artistBtn.classList.add('active');
+                listenerCtrl.style.display = 'none';
+                artistCtrl.style.display = 'flex';
+
+                // Select first artist screen
+                selectMobileScreen('artist-dashboard', artistCtrl.querySelector('.mockup-selector-btn'));
+            }
+        }
+
+        function selectMobileScreen(screenId, btn) {
+            const parent = btn.parentElement;
+            parent.querySelectorAll('.mockup-selector-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.querySelectorAll('.phone-screen').forEach(scr => scr.classList.remove('active'));
+            document.getElementById(`phone-screen-${screenId}`).classList.add('active');
+        }
+
+        // DETAILED SPECS MODAL OVERLAYS
+        function openFeatureOverlay(id) {
+            const feat = featuresData.find(f => f.id === id);
+            if (!feat) return;
+
+            document.getElementById('overlayTitle').innerText = feat.name;
+            document.getElementById('overlayDesc').innerText = feat.desc;
+            document.getElementById('overlayWhy').innerText = feat.why || "Not specified.";
+            document.getElementById('overlayBusiness').innerText = feat.business || "Not specified.";
+            document.getElementById('overlayUser').innerText = feat.user || "Not specified.";
+            document.getElementById('overlayTechnical').innerText = feat.technical || "Not specified.";
+            document.getElementById('overlayScalability').innerText = feat.scalability || "Not specified.";
+
+            document.getElementById('featureOverlay').classList.add('active');
+        }
+
+        function closeFeatureOverlay() {
+            document.getElementById('featureOverlay').classList.remove('active');
+        }
+
+        // AUDIO PLAYER SIMULATION
+        let isPlaying = false;
+        let lyricIndex = 0;
+        const lyrics = [
+            "\"La pli pe tonbe lo sand...\"",
+            "\"Dan mon leker i kler...\"",
+            "\"Mon pe espere ou retour...\"",
+            "\"Sega festival pe komanse...\""
+        ];
+        let lyricsInterval, waveInterval;
+
+        function togglePlayState() {
+            isPlaying = !isPlaying;
+            const playIcon = document.getElementById('playBtnIcon');
+            const disk = document.getElementById('playerDisk');
+
+            if (isPlaying) {
+                playIcon.className = "fa-solid fa-pause";
+                disk.classList.add('playing');
+                lyricsInterval = setInterval(() => {
+                    lyricIndex = (lyricIndex + 1) % lyrics.length;
+                    document.getElementById('playerLyrics').innerText = lyrics[lyricIndex];
+                }, 3000);
+                waveInterval = setInterval(() => {
+                    document.querySelectorAll('#playerWave .wave-bar').forEach(bar => {
+                        bar.style.height = `${Math.floor(Math.random() * 20) + 5}px`;
+                    });
+                }, 150);
+            } else {
+                playIcon.className = "fa-solid fa-play";
+                disk.classList.remove('playing');
+                clearInterval(lyricsInterval);
+                clearInterval(waveInterval);
+            }
+        }
+
+        // ADMIN TAB TOGGLE
+        function selectAdminTab(tabId, btn) {
+            document.querySelectorAll('.admin-nav-item').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // CHART INIT
+        let adminChart;
+        function initAdminChart() {
+            const ctx = document.getElementById('adminRevenueChart').getContext('2d');
+            adminChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'SeyBitz Commission (USD)',
+                        data: [1200, 1900, 3200, 5000, 6800, 8450],
+                        borderColor: '#00f2fe',
+                        backgroundColor: 'rgba(0, 242, 254, 0.05)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af' } },
+                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af' } }
+                    }
+                }
+            });
+        }
+
+        // ARCHITECTURE DETAIL LABELS
+        const archDetails = {
+            client: {
+                title: "Client & Web Tier",
+                desc: "Flutter compiles natively to high-performance iOS and Android code. Audio downloads use SQLite storage and custom byte-encryption keys to block media extraction. Web Admin portal uses React.js."
+            },
+            gateway: {
+                title: "API Orchestration Gateway",
+                desc: "NestJS routes core CRUD operations and payments requests. FastAPI runs microservices for vector embeddings and search recommendations."
+            },
+            db: {
+                title: "Reliable Ledger & Cache databases",
+                desc: "MongoDB databases store catalog structures, transactional histories, and verification details. Redis cluster caches session objects and playlists for speed."
+            },
+            media: {
+                title: "Low-latency Streaming Servers",
+                desc: "HLS (HTTP Live Streaming) segments hosted on AWS S3 and served using CloudFront CDN profiles automatically balance bitrates to adapt to connection variations in Seychelles."
+            },
+            integrations: {
+                title: "Third-party Pipelines",
+                desc: "Firebase Cloud Messaging handles instant releases alerts. Stripe checkout processes credit cards and distributes funds cuts to artist bank records."
+            }
+        };
+
+        function showArchInfo(nodeId) {
+            const info = archDetails[nodeId];
+            if (!info) return;
+
+            document.getElementById('archDetailsTitle').innerText = info.title;
+            document.getElementById('archDetailsDesc').innerText = info.desc;
+            document.getElementById('archDetailsCard').style.display = "block";
+        }
+
+        // SCOPE MATRIX ORGANIZER
+        function renderComparisonTable() {
+            const tbody = document.querySelector('#comparisonTable tbody');
+            tbody.innerHTML = '';
+
+            featuresData.forEach(feat => {
+                const tr = document.createElement('tr');
+                tr.setAttribute('data-name', feat.name.toLowerCase());
+
+                let oldCell = '<i class="fa-solid fa-minus" style="color:rgba(255,255,255,0.15)"></i>';
+                let newCell = '<i class="fa-solid fa-minus" style="color:rgba(255,255,255,0.15)"></i>';
+                let futureCell = '<i class="fa-solid fa-minus" style="color:rgba(255,255,255,0.15)"></i>';
+
+                if (feat.scope === 'existing') {
+                    oldCell = '<span class="scope-badge included"><i class="fa-solid fa-check"></i> Included</span>';
+                } else if (feat.scope === 'newly-added') {
+                    newCell = '<span class="scope-badge new"><i class="fa-solid fa-sparkles"></i> Proposed</span>';
+                }
+
+                if (feat.id === 1 || feat.id === 5 || feat.id === 7) {
+                    futureCell = '<span class="scope-badge future"><i class="fa-solid fa-rocket"></i> V3 Phase</span>';
+                }
+
+                tr.innerHTML = `
+                    <td style="color:#fff; font-weight: 600;">${feat.name}</td>
+                    <td>${oldCell}</td>
+                    <td>${newCell}</td>
+                    <td>${futureCell}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterComparisonTable() {
+            const query = document.getElementById('comparisonSearch').value.toLowerCase();
+            document.querySelectorAll('#comparisonTable tbody tr').forEach(tr => {
+                const name = tr.getAttribute('data-name');
+                if (name.includes(query)) {
+                    tr.style.display = '';
+                } else {
+                    tr.style.display = 'none';
+                }
+            });
+        }
+
+        // INITIALIZE APP
+        window.addEventListener('DOMContentLoaded', () => {
+            renderSpotlight();
+            renderFeatures();
+            renderComparisonTable();
+            initAdminChart();
+
+            gsap.registerPlugin(ScrollTrigger);
+
+            gsap.from('#hero h1', { opacity: 0, y: 30, duration: 1, ease: 'power3.out' });
+            gsap.from('#hero p', { opacity: 0, y: 20, duration: 1, delay: 0.3, ease: 'power3.out' });
+        });
+    </script>
+</body>
+
+</html>
